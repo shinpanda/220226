@@ -14,14 +14,13 @@ import org.springframework.boot.web.server.LocalServerPort;
 import io.restassured.RestAssured;
 
 /*
-���� API ���
-- ȸ������
-- �α���
-- �α׾ƿ�
-- ��ǰ ��ȸ
-- ��ǰ �ֹ�
-- ȸ�� �ֹ� ���� ��ȸ
-
+서버 API 기능
+- 회원가입
+- 로그인
+- 로그아웃
+- 상품 조회
+- 상품 주문
+- 회원 주문 내역 조회
  */
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -42,14 +41,14 @@ class ApplicationTests {
 		requestData.put("email", "dsound72@gmail.com");
 		requestData.put("password", "test");
 		
-		// �غ�
+		// 준비
 		RestAssured.given()
 					.contentType("application/json")
 					.body(requestData).log().all()
-		//����
+		// 실행
 					.when()
 						.post("/signup")
-		//����
+		// 검증
 					.then()
 						.statusCode(201)
 						.assertThat().body("id", equalTo("ds"))

@@ -26,7 +26,7 @@ public class UserControllerTest {
 	
 	@Test
 	void 회원_가입_성공() throws Exception{
-		// �غ�
+		// 준비
 		String ID = "ds";
 		String EMAIL = "dsound72@gmail.com";
 		String PASSWORD = "test";
@@ -36,10 +36,10 @@ public class UserControllerTest {
 		requestData.put("email", EMAIL);
 		requestData.put("password", PASSWORD);
 		
-		// ����
+		// 실행
 		ResultActions perform = mockMvc.perform(post("/signup",requestData));
 		
-		// ����
+		// 검증
 		perform.andExpect(status().isOk())
 			.andExpect(jsonPath("id").value(ID))
 			.andExpect(jsonPath("email").value(EMAIL))

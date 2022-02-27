@@ -12,17 +12,17 @@ class UserServiceTest {
 
 	@Test
 	void 회원_가입_성공() {
-		// �غ�
+		// 준비
 		String ID = "ds";
 		String EMAIL = "dsound72@gmail.com";
 		String PASSWORD = "test";
 		
 		UserSaveRequestDto requestUser = new UserSaveRequestDto(ID, EMAIL, PASSWORD);
 		
-		// ����
+		// 실행
 		User user = userService.save(requestUser);
 		
-		// ����
+		// 검증
 		assertThat(user.getId()).isEqualTo(ID);
 	}
 
