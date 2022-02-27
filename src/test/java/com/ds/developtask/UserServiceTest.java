@@ -11,18 +11,18 @@ class UserServiceTest {
 	UserRepository userRepository;
 
 	@Test
-	void È¸¿ø_°¡ÀÔ_¼º°ø() {
-		// ÁØºñ
+	void íšŒì›_ê°€ì…_ì„±ê³µ() {
+		// ï¿½Øºï¿½
 		String ID = "ds";
 		String EMAIL = "dsound72@gmail.com";
 		String PASSWORD = "test";
 		
 		UserSaveRequestDto requestUser = new UserSaveRequestDto(ID, EMAIL, PASSWORD);
 		
-		// ½ÇÇà
+		// ï¿½ï¿½ï¿½ï¿½
 		User user = userService.save(requestUser);
 		
-		// °ËÁõ
+		// ï¿½ï¿½ï¿½ï¿½
 		assertThat(user.getId()).isEqualTo(ID);
 	}
 

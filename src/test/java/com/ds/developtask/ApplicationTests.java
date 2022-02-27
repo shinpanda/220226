@@ -14,13 +14,13 @@ import org.springframework.boot.web.server.LocalServerPort;
 import io.restassured.RestAssured;
 
 /*
-¼­¹ö API ±â´É
-- È¸¿ø°¡ÀÔ
-- ·Î±×ÀÎ
-- ·Î±×¾Æ¿ô
-- »óÇ° Á¶È¸
-- »óÇ° ÁÖ¹®
-- È¸¿ø ÁÖ¹® ³»¿ª Á¶È¸
+ï¿½ï¿½ï¿½ï¿½ API ï¿½ï¿½ï¿½
+- È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+- ï¿½Î±ï¿½ï¿½ï¿½
+- ï¿½Î±×¾Æ¿ï¿½
+- ï¿½ï¿½Ç° ï¿½ï¿½È¸
+- ï¿½ï¿½Ç° ï¿½Ö¹ï¿½
+- È¸ï¿½ï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 
  */
 
@@ -36,20 +36,20 @@ class ApplicationTests {
 	}
 	
 	@Test
-	void È¸¿ø_°¡ÀÔ_¼º°ø() {
+	void íšŒì›_ê°€ì…_ì„±ê³µ() {
 		Map<String, Object> requestData = new HashMap<>();
 		requestData.put("id", "ds");
 		requestData.put("email", "dsound72@gmail.com");
 		requestData.put("password", "test");
 		
-		// ÁØºñ
+		// ï¿½Øºï¿½
 		RestAssured.given()
 					.contentType("application/json")
 					.body(requestData).log().all()
-		//½ÇÇà
+		//ï¿½ï¿½ï¿½ï¿½
 					.when()
 						.post("/signup")
-		//°ËÁõ
+		//ï¿½ï¿½ï¿½ï¿½
 					.then()
 						.statusCode(201)
 						.assertThat().body("id", equalTo("ds"))

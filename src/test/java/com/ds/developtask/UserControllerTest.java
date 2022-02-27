@@ -25,8 +25,8 @@ public class UserControllerTest {
 	
 	
 	@Test
-	void È¸¿ø_°¡ÀÔ_¼º°ø() throws Exception{
-		// ÁØºñ
+	void íšŒì›_ê°€ì…_ì„±ê³µ() throws Exception{
+		// ï¿½Øºï¿½
 		String ID = "ds";
 		String EMAIL = "dsound72@gmail.com";
 		String PASSWORD = "test";
@@ -36,10 +36,10 @@ public class UserControllerTest {
 		requestData.put("email", EMAIL);
 		requestData.put("password", PASSWORD);
 		
-		// ½ÇÇà
+		// ï¿½ï¿½ï¿½ï¿½
 		ResultActions perform = mockMvc.perform(post("/signup",requestData));
 		
-		// °ËÁõ
+		// ï¿½ï¿½ï¿½ï¿½
 		perform.andExpect(status().isOk())
 			.andExpect(jsonPath("id").value(ID))
 			.andExpect(jsonPath("email").value(EMAIL))
