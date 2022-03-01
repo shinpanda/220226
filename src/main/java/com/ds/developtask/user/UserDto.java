@@ -1,4 +1,6 @@
-package com.ds.developtask;
+package com.ds.developtask.user;
+
+import com.ds.developtask.user.domain.User;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,23 +8,22 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UserSaveRequestDto {
+public class UserDto {
 	
-	private String id;
+	private Long id;
 	private String email;
 	private String password;
 	
 	@Builder
-	public UserSaveRequestDto(String id, String email, String password) {
-		this.id = id;
+	public UserDto(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
 	
 	public User toEntity() {
 		return User.builder()
-				.id(id)
 				.email(email)
-				.password(password).build();
+				.password(password)
+				.build();
 	}
 }
