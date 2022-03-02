@@ -20,10 +20,11 @@ import com.ds.developtask.security.CustomUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest
-public class UserControllerTest {
+class UserControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	@MockBean

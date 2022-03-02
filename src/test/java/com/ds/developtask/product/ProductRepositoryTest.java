@@ -19,8 +19,7 @@ class ProductRepositoryTest {
 		//준비
 		
 		//실행
-		Product product = productRepository.findById(1L)
-				.orElseThrow(RuntimeException::new);
+		Product product = productRepository.findById(1L).orElseThrow(RuntimeException::new);
 		//검증
 		assertThat(product.getId()).isEqualTo(1L);
 	}

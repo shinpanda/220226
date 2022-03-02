@@ -29,17 +29,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	
         http
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
-                    .antMatchers("/signup", "/login", "/", "/api/v2/**", "/product/**").permitAll()
+                    .antMatchers("/signup", "/login", "/", "/api/v2/**").permitAll()
                     .anyRequest().hasRole("USER")
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), 
+                		UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests();
     }
 
     @Override
