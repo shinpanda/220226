@@ -1,18 +1,18 @@
 package com.ds.developtask.product;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.ds.developtask.product.domain.Product;
+import com.ds.developtask.product.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.ds.developtask.product.domain.Product;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class ProductRepositoryTest {
 
 	@Autowired
-	ProductRepository productRepository;
+    private ProductRepository productRepository;
 	
 	@Test
 	void 상품_조회_성공() {

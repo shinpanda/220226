@@ -6,6 +6,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import com.ds.developtask.product.repository.ProductRepository;
+import com.ds.developtask.product.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,7 +20,7 @@ import com.ds.developtask.product.domain.Product;
 class ProductServiceTest {
 	
 	@Mock
-	ProductRepository productRepository;
+    ProductRepository productRepository;
 	
 	@InjectMocks
 	ProductService productService;

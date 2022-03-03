@@ -1,4 +1,4 @@
-package com.ds.developtask.user;
+package com.ds.developtask.user.dto;
 
 import com.ds.developtask.user.domain.User;
 

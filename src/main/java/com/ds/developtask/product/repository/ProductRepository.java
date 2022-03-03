@@ -1,4 +1,4 @@
-package com.ds.developtask.product;
+package com.ds.developtask.product.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,21 +1,14 @@
 package com.ds.developtask.user.domain;
 
-import java.util.Collection;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
+import com.ds.developtask.order.domain.Order;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @Getter
@@ -40,12 +33,17 @@ public class User{
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
 		)
 	private Collection<Role> roles;
+
+	@OneToMany(mappedBy = "user")
+	@OrderBy("id asc")
+	private List<Order> orders = new ArrayList<Order>();
 	
 	@Builder
-	public User(Long id, String email, String password, Collection<Role> roles) {
+	public User(Long id, String email, String password, Collection<Role> roles, List<Order> orders) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.orders = orders;
 	}
 }

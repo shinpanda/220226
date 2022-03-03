@@ -1,23 +1,21 @@
-package com.ds.developtask.user;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityExistsException;
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+package com.ds.developtask.user.service;
 
 import com.ds.developtask.config.JwtTokenProvider;
 import com.ds.developtask.user.domain.Role;
 import com.ds.developtask.user.domain.User;
+import com.ds.developtask.user.dto.UserDto;
+import com.ds.developtask.user.dto.UserResponseDto;
 import com.ds.developtask.user.repository.RoleRepository;
 import com.ds.developtask.user.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -25,24 +23,29 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
-	
-	@Autowired
+
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    
-    @Autowired
-    private final RedisTemplate<String, String> redisTemplate;
-    
-    private final String DEFAULT_ROLE = "USER_ROLE";
-	
-	@Transactional
-	public User save(UserDto requestUser) {
-        User user = userRepository.findByEmail(requestUser.getEmail()).orElseThrow(() -> new EntityExistsException("해당 이메일로 가입할 수 없습니다."));
+	private final ModelMapper modelMapper;
 
-		return userRepository.save(User.builder()
+    private final RedisTemplate<String, String> redisTemplate;
+    private final String DEFAULT_ROLE = "USER_ROLE";
+
+	@Transactional
+	public UserResponseDto save(UserDto requestUser) {
+        Boolean notSignedUser = userRepository.findByEmail(requestUser.getEmail()).isEmpty();
+        if(!notSignedUser) new IllegalArgumentException("해당 이메일로 가입할 수 없습니다.");
+
+		modelMapper.createTypeMap(User.class, UserResponseDto.class).addMappings(mapping ->
+		{
+			mapping.map(User::getId, UserResponseDto::setId);
+			mapping.map(User::getEmail, UserResponseDto::setEmail);
+		});
+		User user = userRepository.save(User.builder()
 				.email(requestUser.getEmail())
 				.password(passwordEncoder.encode(requestUser.getPassword()))
 				.roles(Arrays.asList(roleRepository.findByName(DEFAULT_ROLE))).build());
+		return modelMapper.map(user, UserResponseDto.class);
 	}
 
 	public String login(UserDto requestUser) {

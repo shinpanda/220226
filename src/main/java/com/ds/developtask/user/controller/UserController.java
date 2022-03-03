@@ -1,21 +1,21 @@
-package com.ds.developtask.user;
+package com.ds.developtask.user.controller;
 
+import com.ds.developtask.user.dto.UserDto;
+import com.ds.developtask.user.dto.UserResponseDto;
+import com.ds.developtask.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ds.developtask.user.domain.User;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 public class UserController {
 		
-	private final UserService userService; 
+	private final UserService userService;
 	
 	@PostMapping("/signup") 
-	public User signup(@RequestBody UserDto user) {
+	public UserResponseDto signup(@RequestBody UserDto user) {
 		return userService.save(user);
 	}
 	 

@@ -1,16 +1,12 @@
 package com.ds.developtask.order.domain;
 
-import java.lang.reflect.Member;
-
-import javax.persistence.*;
-
 import com.ds.developtask.product.domain.Product;
-
 import com.ds.developtask.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -22,11 +18,11 @@ public class Order {
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="userId")
+	@JoinColumn(name="UserId")
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="productId")
+	@JoinColumn(name="ProductId")
 	private Product product;
 
 	@Builder
