@@ -1,6 +1,7 @@
 package com.ds.developtask.user;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
@@ -36,11 +37,8 @@ public class UserService {
 	
 	@Transactional
 	public User save(UserDto requestUser) {
-        User user = userRepository.findByEmail(requestUser.getEmail());
-		
-        if(user != null)
-        	throw new EntityExistsException("해당 이메일로 가입할 수 없습니다.");
-        
+        User user = userRepository.findByEmail(requestUser.getEmail()).orElseThrow(() -> new EntityExistsException("해당 이메일로 가입할 수 없습니다."));
+
 		return userRepository.save(User.builder()
 				.email(requestUser.getEmail())
 				.password(passwordEncoder.encode(requestUser.getPassword()))
@@ -48,12 +46,13 @@ public class UserService {
 	}
 
 	public String login(UserDto requestUser) {
-        User user = userRepository.findByEmail(requestUser.getEmail());
+		String errorMessage = "이름과 패스워드를 다시 확인해주세요";
+		User user = userRepository.findByEmail(requestUser.getEmail()).orElseThrow(() -> new IllegalArgumentException(errorMessage));
 
-        if(user == null || (!passwordEncoder.matches(requestUser.getPassword(), user.getPassword()))) {
-            throw new IllegalArgumentException("이름과 패스워드를 다시 확인해주세요");
-        }
-        
-        return jwtTokenProvider.createToken(String.valueOf(user.getEmail()), user.getRoles().stream().map(Role::getName).toList());
+		if (!passwordEncoder.matches(requestUser.getPassword(), user.getPassword())) {
+			throw new IllegalArgumentException(errorMessage);
+		}
+
+		return jwtTokenProvider.createToken(String.valueOf(user.getEmail()), user.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
 	}
 }

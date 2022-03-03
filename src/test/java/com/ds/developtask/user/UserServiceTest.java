@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,10 +73,10 @@ class UserServiceTest {
 	void 로그인_성공() {
 		// 준비
 		when(passwordEncoder.matches(any(), any())).thenReturn(true);
-		when(userRepository.findByEmail(any())).thenReturn(User.builder()
+		when(userRepository.findByEmail(any())).thenReturn(Optional.ofNullable(User.builder()
 				.email(requestUser.getEmail())
 				.password(requestUser.getPassword())
-				.roles(Arrays.asList(new Role("USER_ROLE"))).build());
+				.roles(Arrays.asList(new Role("USER_ROLE"))).build()));
 		when(jwtTokenProvider.createToken(any(), any())).thenReturn("CreateToken");
 		// 실행
 		String token = userService.login(requestUser);

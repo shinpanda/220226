@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ds.developtask.user.UserDto;
@@ -42,17 +43,16 @@ class UserRepositoryTest {
 	@Test
 	void 로그인_성공() {
 		// 준비
-		String EMAIL = "dsound722@gmail.com";
+		String EMAIL = "dsound72@gmail.com";
 		String PASSWORD = "test";
-		
-		UserDto requestUser = UserDto.builder().email(EMAIL).password(PASSWORD).build();
-		User user = userRepository.save(requestUser.toEntity());
+
+
 		// 실행
-		
-		
+		User user = userRepository.findByEmail(EMAIL).orElseThrow(IllegalArgumentException::new);
+
 		// 검증
 		assertThat(user.getEmail()).isEqualTo(EMAIL);
-		
+		assertThat(user.getPassword()).isEqualTo(new BCryptPasswordEncoder().encode(PASSWORD));
 	}
 
 }

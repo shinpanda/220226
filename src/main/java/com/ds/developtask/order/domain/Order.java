@@ -12,11 +12,14 @@ import javax.persistence.ManyToOne;
 
 import com.ds.developtask.product.domain.Product;
 
+import com.ds.developtask.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Order {
 	@Id
@@ -25,9 +28,16 @@ public class Order {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id")
-	private Member member;
+	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id")
 	private Product product;
+
+	@Builder
+	public Order(Long id, User user, Product product) {
+		this.id = id;
+		this.user = user;
+		this.product = product;
+	}
 }

@@ -26,14 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
-
-		if(user == null) {
-			throw new UsernameNotFoundException("해당하는 사용자가 없습니다.");
-		}
-		
+		User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("해당하는 사용자가 없습니다."));
 		Collection<GrantedAuthority> userRoles = user.getRoles().stream().map(Role::getName).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-		
         return new CustomUserDetails(user.getEmail(), user.getPassword(), false, userRoles);
 	}
 }
